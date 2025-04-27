@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Berita & Artikel - Sekolah Cendekia</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #f8fcf9;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Header & Navbar */
+        .header {
+            background: linear-gradient(135deg, #4CAF50, #8BC34A);
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 50px;
+            margin-right: 10px;
+        }
+
+        .logo-text {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .navbar {
+            display: flex;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            margin: 0 5px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .navbar a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .navbar a.active {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Page Title */
+        .page-header {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/api/placeholder/1200/400');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .page-header p {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+        }
+
+        /* News Content */
+        .news-section {
+            padding: 50px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            color: #2E7D32;
+            position: relative;
+        }
+
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #4CAF50, #8BC34A);
+            margin: 15px auto 0;
+            border-radius: 2px;
+        }
+
+        /* Featured News */
+        .featured-news {
+            margin-bottom: 60px;
+        }
+
+        .featured-article {
+            display: flex;
+            flex-wrap: wrap;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .featured-image {
+            flex: 1;
+            min-width: 300px;
+            height: 400px;
+        }
+
+        .featured-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .featured-content {
+            flex: 1;
+            min-width: 300px;
+            padding: 40px;
+        }
+
+        .article-category {
+            display: inline-block;
+            background: linear-gradient(135deg, #4CAF50, #8BC34A);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-bottom: 15px;
+        }
+
+        .featured-content h2 {
+            color: #333;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        .article-meta {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            color: #777;
+            font-size: 0.9rem;
+        }
+
+        .article-meta .date {
+            display: flex;
+            align-items: center;
+            margin-right: 20px;
+        }
+
+        .article-meta i {
+            margin-right: 5px;
+            color: #4CAF50;
+        }
+
+        .featured-content p {
+            color: #555;
+            margin-bottom: 30px;
+        }
+
+        .read-more-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #4CAF50, #8BC34A);
+            color: white;
+            padding: 10px 25px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .read-more-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        /* News Grid */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .news-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .news-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .news-image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .news-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .news-card:hover .news-image img {
+            transform: scale(1.1);
+        }
+
+        .news-content {
+            padding: 25px;
+        }
+
+        .news-content h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .news-meta {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            color: #777;
+            font-size: 0.8rem;
+        }
+
+        .news-content p {
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        .news-link {
+            color: #4CAF50;
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+        }
+
+        .news-link i {
+            margin-left: 5px;
+            transition: transform 0.3s ease;
+        }
+
+        .news-link:hover i {
+            transform: translateX(5px);
+        }
+
+        /* Categories */
+        .categories-section {
+            background-color: white;
+            padding: 50px 0;
+            margin-bottom: 50px;
+        }
+
+        .categories-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .category-item {
+            background: #f1f8e9;
+            color: #4CAF50;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .category-item:hover, .category-item.active {
+            background: linear-gradient(135deg, #4CAF50, #8BC34A);
+            color: white;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 50px;
+        }
+
+        .pagination-item {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            margin: 0 5px;
+            border-radius: 50%;
+            color: #555;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .pagination-item:hover {
+            background: #f1f8e9;
+            color: #4CAF50;
+        }
+
+        .pagination-item.active {
+            background: linear-gradient(135deg, #4CAF50, #8BC34A);
+            color: white;
+        }
+
+        /* Newsletter */
+        .newsletter {
+            background: linear-gradient(135deg, #4CAF50, #8BC34A);
+            padding: 60px 0;
+            color: white;
+            margin-bottom: 50px;
+        }
+
+        .newsletter-container {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .newsletter h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        .newsletter p {
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .newsletter-form {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 5px 0 0 5px;
+            font-size: 1rem;
+        }
+
+        .newsletter-btn {
+            background: #333;
+            color: white;
+            border: none;
+            padding: 0 25px;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-btn:hover {
+            background: #222;
+        }
+
+        /* Footer */
+        .footer {
+            background: #333;
+            color: #f8f8f8;
+            padding: 40px 0 20px;
+        }
+
+        .footer-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .footer-section h3 {
+            color: #8BC34A;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-section h3:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background: #8BC34A;
+        }
+
+        .footer-links a {
+            display: block;
+            color: #ddd;
+            margin-bottom: 10px;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #8BC34A;
+        }
+
+        .footer-contact p {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-contact i {
+            margin-right: 10px;
+            color: #8BC34A;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icons a {
+            width: 35px;
+            height: 35px;
+            background: #444;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            background: #8BC34A;
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+            }
+            
+            .logo {
+                margin-bottom: 15px;
+            }
+            
+            .navbar {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .navbar a {
+                padding: 8px 12px;
+                font-size: 0.9rem;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .featured-image, .featured-content {
+                flex: 100%;
+            }
+            
+            .featured-image {
+                height: 250px;
+            }
+            
+            .featured-content {
+                padding: 25px;
+            }
+            
+            .featured-content h2 {
+                font-size: 1.5rem;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+            }
+            
+            .newsletter-input {
+                border-radius: 5px;
+                margin-bottom: 10px;
+            }
+            
+            .newsletter-btn {
+                border-radius: 5px;
+                padding: 12px;
+            }
+            
+            .footer-section {
+                flex: 100%;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header & Navbar -->
+    <header class="header">
+        <div class="container nav-container">
+            <div class="logo">
+                <img src="https://firebasestorage.googleapis.com/v0/b/smart-school-300211.appspot.com/o/1613371681274-logo.png?alt=media&token=33fe61ff-fa91-46e3-a159-17ba2761fc2c" alt="Logo Sekolah Cendekia">
+                <div class="logo-text">SMKN 26 Jakarta</div>
+            </div>
+            <nav class="navbar">
+                <a href="index.html">Beranda</a>
+                <a href="news.html" class="active">Berita</a>
+                <a href="contact.html">Kontak</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="container">
+            <h1>Berita & Artikel</h1>
+            <p>Tetap terhubung dengan perkembangan terbaru di SMKN 26 Jakarta, kegiatan siswa, dan inovasi pendidikan</p>
+        </div>
+    </div>
+
+    <!-- Featured News -->
+    <section class="news-section">
+        <div class="container">
+            <h2 class="section-title">Berita Utama</h2>
+            <div class="featured-news">
+                <div class="featured-article">
+                    <div class="featured-image">
+                        <img src="/api/placeholder/600/400" alt="Artikel Utama">
+                    </div>
+                    <div class="featured-content">
+                        <span class="article-category">Prestasi</span>
+                        <h2>Tim Robotik Sekolah Cendekia Raih Juara Internasional</h2>
+                        <div class="article-meta">
+                            <div class="date">
+                                <i class="far fa-calendar-alt"></i>
+                                20 April 2025
+                            </div>
+                            <div class="author">
+                                <i class="far fa-user"></i>
+                                Admin Sekolah
+                            </div>
+                        </div>
+                        <p>Tim Robotik Sekolah Cendekia berhasil meraih juara pertama dalam kompetisi robotik internasional yang diselenggarakan di Singapura pekan lalu. Tim yang terdiri dari lima siswa SMA ini berhasil mengalahkan 30 tim dari berbagai negara dengan robot inovatif yang mampu menyelesaikan misi kompleks dalam waktu tercepat.</p>
+                        <p>Prestasi ini menjadi kebanggaan bagi Sekolah Cendekia dan membuktikan bahwa program STEM yang dikembangkan sekolah telah berhasil mempersiapkan siswa untuk bersaing di tingkat global.</p>
+                        <a href="#" class="read-more-btn">Baca Selengkapnya</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories -->
+    <section class="categories-section">
+        <div class="container">
+            <h2 class="section-title">Kategori</h2>
+            <div class="categories-container">
+                <div class="category-item active">Semua</div>
+                <div class="category-item">Prestasi</div>
+                <div class="category-item">Kegiatan Sekolah</div>
+                <div class="category-item">Akademik</div>
+                <div class="category-item">Ekstrakurikuler</div>
+                <div class="category-item">Pengumuman</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- News Grid -->
+    <section class="news-section">
+        <div class="container">
+            <h2 class="section-title">Berita Terkini</h2>
+            <div class="news-grid">
+                <div class="news-card">
+                    <div class="news-image">
+                        <img src="/api/placeholder/400/300" alt="Berita 1">
+                    </div>
+                    <div class="news-content">
+                        <div class="news-meta">
+                            <div class="date">
+                                <i class="far fa-calendar-alt"></i>
+                                15 April 2025
+                            </div>
+                        </div>
+                        <h3>Prestasi Gemilang di Olimpiade Sains Nasional</h3>
+                        <p>Tim Sekolah Cendekia berhasil meraih 3 medali emas, 2 perak, dan 4 perunggu dalam ajang Olimpiade Sains Nasional 2025.</p>
+                        <a href="#" class="news-link">Baca Selengkapnya <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                
+                <div class="news-card">
+                    <div class="news-image">
+                        <img src="/api/placeholder/400/300" alt="Berita 2">
+                    </div>
+                    <div class="news-content">
+                        <div class="news-meta">
+                            <div class="date">
+                                <i class="far fa-calendar-alt"></i>
+                                10 April 2025
+                            </div>
+                        </div>
+                        <h3>Program Pertukaran Pelajar Internasional</h3>
+                        <p>Sekolah Cendekia menjalin kerjasama dengan sekolah-sekolah di Asia dan Eropa untuk program pertukaran pelajar tahun ajaran 2025/2026.</p>
+                        <a href="#" class="news-link">Baca Selengkapnya <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                
+                <div class="news-card">
+                    <div class="news-image">
+                        <img src="/api/placeholder/400/300" alt="Berita 3">
+                    </div>
+                    <div class="news-content">
+                        <div class="news-meta">
+                            <div class="date">
+                                <i class="far fa-calendar-alt"></i>
+                                5 April 2025
+                            </div>
+                        </div>
+                        <h3>Pengembangan Fasilitas Teknologi Pembelajaran</h3>
+                        <p>Sekolah Cendekia meresmikan laboratorium teknologi baru yang dilengkapi dengan perangkat AR/VR untuk mendukung pembelajaran interaktif.</p>
+                        <a href="#" class="news-link">Baca Selengkapnya <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                
+                <div class="news-card">
+                    <div class="news-image">
+                        <img src="/api/placeholder/400/300" alt="Berita 4">
+                    </div>
+                    <div class="news-content">
+                        <div class="news-meta">
+                            <div class="date">
+                                <i class="far fa-calendar-alt"></i>
+                                1 April 2025
+                            </div>
+                        </div>
+                        <h3>Workshop Literasi Digital untuk Guru dan Siswa</h3>
+                        <p>Sekolah Cendekia mengadakan workshop literasi digital dengan mengundang pakar teknologi untuk meningkatkan pemahaman tentang keamanan siber.</p>
+                        <a href="#" class="news-link">Baca Selengkapnya <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                
+                <div class="news-card">
+                    <div class="news-image">
+                        <img src="/api/placeholder/400/300" alt="Berita 5">
+                    </div>
+                    <div class="news-content">
+                        <div class="news-meta">
+                            <div class="date">
+                                <i class="far fa-calendar-alt"></i>
+                                28 Maret 2025
+                            </div>
+                        </div>
+                        <h3>Perayaan Hari Bumi: Aksi Penanaman 1000 Pohon</h3>
+                        <p>Dalam rangka Hari Bumi, Sekolah Cendekia bekerjasama dengan komunitas lingkungan melaksanakan aksi penanaman 1000 pohon di kawasan hutan kota.</p>
+                        <a href="#" class="news-link">Baca Selengkapnya <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                
+                <div class="news-card">
+                    <div class="news-image">
+                        <img src="/api/placeholder/400/300" alt="Berita 6">
+                    </div>
+                    <div class="news-content">
+                        <div class="news-meta">
+                            <div class="date">
+                                <i class="far fa-calendar-alt"></i>
+                                25 Maret 2025
+                            </div>
+                        </div>
+                        <h3>Kunjungan Industri ke Perusahaan Teknologi</h3>
+                        <p>Siswa kelas XI berkunjung ke perusahaan teknologi terkemuka untuk mengenal lebih dekat dunia industri dan teknologi terkini.</p>
+                        <a href="#" class="news-link">Baca Selengkapnya <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Pagination -->
+            <div class="pagination">
+                <a href="#" class="pagination-item active">1</a>
+                <a href="#" class="pagination-item">2</a>
+                <a href="#" class="pagination-item">3</a>
+                <a href="#" class="pagination-item"><i class="fas fa-angle-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="newsletter">
+        <div class="container newsletter-container">
+            <h3>Berlangganan Newsletter</h3>
+            <p>Dapatkan informasi terbaru tentang kegiatan sekolah, prestasi siswa, dan program pendidikan langsung ke email Anda.</p>
+            <form class="newsletter-form">
+                <input type="email" class="newsletter-input" placeholder="Alamat Email Anda" required>
+                <button type="submit" class="newsletter-btn">Berlangganan</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-container">
+            <div class="footer-section">
+                <h3>Sekolah Cendekia</h3>
+                <p>Mendidik generasi masa depan Indonesia dengan nilai-nilai unggul, kreativitas, dan karakter yang kuat.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Tautan Penting</h3>
+                <div class="footer-links">
+                    <a href="#">Beranda</a>
+                    <a href="#">Tentang Kami</a>
+                    <a href="#">Program Akademik</a>
+                    <a href="#">Fasilitas</a>
+                    <a href="#">Berita & Artikel</a>
+                    <a href="#">Kontak</a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Kontak Kami</h3>
+                <div class="footer-contact">
+                    <p><i class="fas fa-map-marker-alt"></i> Jl. Pendidikan No. 123, Kecamatan Cendekia, Kota Ilmu Pengetahuan, 12345</p>
+                    <p><i class="fas fa-phone-alt"></i> (021) 1234-5678</p>
+                    <p><i class="fas fa-envelope"></i> info@sekolahcendekia.ac.id</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container">
+            <div class="copyright">
+                <p>&copy; Zidane Achmad Nurjayyin/X-PPLG2. Hak Cipta Dilindungi.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar active state
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentLocation = window.location.href;
+            const navLinks = document.querySelectorAll('.navbar a');
+            
+            navLinks.forEach(link => {
+                if (currentLocation.includes(link.href)) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        });
+
+        // Category filter
+        document.addEventListener('DOMContentLoaded', function() {
+            const categoryItems = document.querySelectorAll('.category-item');
+            
+            categoryItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    // Remove active class from all items
+                    categoryItems.forEach(cat => cat.classList.remove('active'));
+                    
+                    // Add active class to clicked item
+                    this.classList.add('active');
+                    
+                    // Here you would typically implement the actual filtering
+                    // For demonstration purposes, we're just changing the active state
+                });
+            });
+        });
+    </script>
+</body>
+</html>
